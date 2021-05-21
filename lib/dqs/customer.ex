@@ -4,7 +4,7 @@ defmodule Dqs.Consumer do
   alias Dqs.Command
   alias Nostrum.Api
   @prefix Application.get_env(:dqs, :prefix)
-  @question_channel_id Application.get_env(:dqs, :board_channel_id)
+  @question_channel_id Application.get_env(:dqs, :question_channel_id)
 
   def start_link do
     Consumer.start_link(__MODULE__)
