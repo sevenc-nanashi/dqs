@@ -8,6 +8,7 @@ defmodule Dqs.Question do
     field :content, :string
     field :status, :string
     field :channel_id, :integer
+    field :close_message_id, :integer
     field :tag, {:array, :string}, default: []
     has_one :info, Dqs.QuestionInfo
 

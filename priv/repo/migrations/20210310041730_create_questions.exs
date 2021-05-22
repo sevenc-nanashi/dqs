@@ -15,6 +15,7 @@ defmodule Dqs.Repo.Migrations.CreateQuestions do
       add :content, :text
       add :status, :question_status
       add :channel_id, :bigint
+      add :close_message_id, :bigint
       add :tag, {:array, :string}
 
       timestamps()

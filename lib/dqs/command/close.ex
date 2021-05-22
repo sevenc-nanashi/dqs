@@ -32,7 +32,8 @@ defmodule Dqs.Command.Close do
          {:ok, question} <- close_question(question),
          {:ok, _message} <- update_info_message(question)
     do
-      Nostrum.Api.create_message(msg.channel_id, "closeされました。")
+      {:ok, close_message} = Nostrum.Api.create_message(msg.channel_id, "closeされました。")
+      update_close_message_id(question, close_message)
     else
       true -> Nostrum.Api.create_message(msg.channel_id, "レートリミットによりcloseできませんでした。しばらく経ってから再度お試しください。")
       {:error, %Nostrum.Error.ApiError{status_code: 429, response: %{retry_after: retry_after}}} ->
@@ -76,6 +77,11 @@ defmodule Dqs.Command.Close do
       parent_id: @closed_category_id,
       permission_overwrites: parent_channel.permission_overwrites
     )
+  end
 
+  defp update_close_message_id(question, message) do
+    question
+      |> Ecto.Changeset.change(close_message_id: message.id)
+      |> Repo.update
   end
 end

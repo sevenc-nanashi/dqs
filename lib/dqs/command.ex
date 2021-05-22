@@ -52,6 +52,10 @@ defmodule Dqs.Command do
     Dqs.Command.Search.handle(msg)
   end
 
+  def handle(%{content: @prefix <> "merge " <> _} = msg) do
+    Dqs.Command.Merge.handle(msg)
+  end
+
   def handle(%{content: @prefix <> "help"} = msg) do
     content = ~s/
 <##{System.get_env("QUESTION_CHANNEL_ID")}>に質問のタイトルを投稿すると、自動的に質問チャンネルが作成されます。
@@ -60,6 +64,7 @@ defmodule Dqs.Command do
 ```
 #{@prefix}help -> このメッセージを表示します。
 
+#{@prefix}merge [ID] -> 質問を引き継ぎます。指定したIDの質問のcloseに引き継がれたことが書かれます。
 #{@prefix}title [タイトル] -> タイトルを新しく設定します。
 #{@prefix}content [内容] -> 質問の内容を設定します。
 (返信つきで) #{@prefix}content -> 返信元のメッセージを質問の内容として設定します。
